@@ -7,11 +7,11 @@ import java.util.List;
  * Two or more terms can exist for the same equation
  * E.g.: 3_1/2 + 2_7/8 * 3_2/3
  */
-public class Operation {
+public class Equation {
   private List<Fraction> fractions;
   private List<Operator> operators;
 
-  public Operation(List<Fraction> fractions, List<Operator> operators) {
+  public Equation(List<Fraction> fractions, List<Operator> operators) {
     this.fractions = fractions;
     this.operators = operators;
   }
