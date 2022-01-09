@@ -21,9 +21,21 @@ public abstract class Solver {
       // Convert back to Mixed Fraction
       int fullNumber = numerator / denominator;
       int newNumerator = Math.abs(numerator - fullNumber * denominator);
-      return new Fraction(fullNumber, newNumerator, denominator);
+      return simplifyFraction(fullNumber, newNumerator, denominator);
     } else {
-      return new Fraction(numerator, denominator);
+      return simplifyFraction(1, numerator, denominator);
     }
+  }
+
+  protected Fraction simplifyFraction(int fullNumber, int numerator, int denominator) {
+    int max = Math.max(numerator, denominator);
+
+    for(int i=2; i<=max; i++) {
+      if(numerator % i == 0 && denominator % i == 0) {
+        numerator = numerator / i;
+        denominator = denominator / i;
+      }
+    }
+    return new Fraction(fullNumber, numerator, denominator);
   }
 }
