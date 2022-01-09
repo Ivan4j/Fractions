@@ -2,7 +2,7 @@ package com.onelogin.fractions.solver;
 
 import com.onelogin.fractions.model.Fraction;
 
-public class AdditionSolver extends Solver {
+public class SubtractionSolver extends Solver {
   @Override
   public Fraction solve(Fraction firstTerm, Fraction secondTerm) {
     Fraction simpleFirstTerm = convertMixedToSimpleFraction(firstTerm);
@@ -13,12 +13,12 @@ public class AdditionSolver extends Solver {
 
     if (simpleFirstTerm.getDenominator() == simpleSecondTerm.getDenominator()) {
       denominator = simpleFirstTerm.getDenominator();
-      numerator = simpleFirstTerm.getNumerator() + simpleSecondTerm.getNumerator();
+      numerator = simpleFirstTerm.getNumerator() - simpleSecondTerm.getNumerator();
     } else {
       denominator = simpleFirstTerm.getDenominator() * simpleSecondTerm.getDenominator();
       int firstMult = simpleFirstTerm.getNumerator() * simpleSecondTerm.getDenominator();
       int secondMult = simpleFirstTerm.getDenominator() * simpleSecondTerm.getNumerator();
-      numerator = firstMult + secondMult;
+      numerator = firstMult - secondMult;
     }
 
     return convertSimpleToMixedFraction(numerator, denominator);

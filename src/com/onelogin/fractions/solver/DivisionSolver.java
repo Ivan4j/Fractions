@@ -1,11 +1,17 @@
 package com.onelogin.fractions.solver;
 
-import com.onelogin.fractions.model.Solution;
+import com.onelogin.fractions.model.Fraction;
 
-public class DivisionSolver implements Solver {
+public class DivisionSolver extends Solver {
 
   @Override
-  public Solution solve() {
-    return null;
+  public Fraction solve(Fraction firstTerm, Fraction secondTerm) {
+    Fraction simpleFirstTerm = convertMixedToSimpleFraction(firstTerm);
+    Fraction simpleSecondTerm = convertMixedToSimpleFraction(secondTerm);
+
+    int numerator = simpleFirstTerm.getNumerator() * simpleSecondTerm.getDenominator();
+    int denominator = simpleFirstTerm.getDenominator() * simpleSecondTerm.getNumerator();
+
+    return convertSimpleToMixedFraction(numerator, denominator);
   }
 }

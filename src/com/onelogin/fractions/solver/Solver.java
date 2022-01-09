@@ -14,11 +14,13 @@ public abstract class Solver {
     return fraction;
   }
 
-  protected Fraction convertToFraction(int numerator, int denominator) {
-    if((numerator / denominator) >= 2) {
+  protected Fraction convertSimpleToMixedFraction(int numerator, int denominator) {
+    // Use ABS to properly make a division between negative numbers (for subtraction calculation)
+    int div = Math.abs(numerator) / Math.abs(denominator);
+    if(div >= 2) {
       // Convert back to Mixed Fraction
       int fullNumber = numerator / denominator;
-      int newNumerator = numerator - fullNumber * denominator;
+      int newNumerator = Math.abs(numerator - fullNumber * denominator);
       return new Fraction(fullNumber, newNumerator, denominator);
     } else {
       return new Fraction(numerator, denominator);
