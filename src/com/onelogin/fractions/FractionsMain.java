@@ -17,7 +17,7 @@ public class FractionsMain {
     // Validate and Parse
     Equation equation = Parser.parse(args);
 
-    // Execute corresponding Operation In Order (mult & div first, addition and substraction last)
+    // Execute corresponding Operation In Order (mult & div first, addition and subtraction last)
     SolverManager solverManager = new SolverManager();
     Solution solution = solverManager.solve(equation);
 

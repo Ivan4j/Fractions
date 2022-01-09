@@ -53,14 +53,14 @@ public class Parser {
       String[] fractionTerms = param.split("_");
       fullNumber = Integer.valueOf(fractionTerms[0]);
       fraction = fractionTerms[1];
+    } else {
+      fraction = param;
     }
 
     int fractionSymbolIndex = fraction.indexOf("/");
     if(fractionSymbolIndex > 0) {
       numerator = Integer.valueOf(fraction.substring(0, fractionSymbolIndex));
       denominator = Integer.valueOf(fraction.substring(fractionSymbolIndex + 1, fraction.length()));
-    } else {
-      fullNumber = Integer.valueOf(param);
     }
 
     System.out.println(param);

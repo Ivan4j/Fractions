@@ -13,6 +13,12 @@ public class Fraction {
   private int numerator;
   private int denominator;
 
+  public Fraction(int numerator, int denominator) {
+    this.fullNumber = 1;
+    this.numerator = numerator;
+    this.denominator = denominator;
+  }
+
   public Fraction(int fullNumber, int numerator, int denominator) {
     this.fullNumber = fullNumber;
     this.numerator = numerator;
@@ -41,5 +47,13 @@ public class Fraction {
 
   public void setDenominator(int denominator) {
     this.denominator = denominator;
+  }
+
+  @Override
+  public String toString() {
+    return "Fraction{" + fullNumber +
+        " " + numerator +
+        " / " + denominator +
+        '}';
   }
 }
