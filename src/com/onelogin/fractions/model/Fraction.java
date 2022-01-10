@@ -9,43 +9,43 @@ package com.onelogin.fractions.model;
  * 2 - denominator
  */
 public class Fraction {
-  private int fullNumber;
-  private int numerator;
-  private int denominator;
+  private long fullNumber;
+  private long numerator;
+  private long denominator;
 
-  public Fraction(int numerator, int denominator) {
+  public Fraction(long numerator, long denominator) {
     this.fullNumber = 1;
     this.numerator = numerator;
     this.denominator = denominator;
   }
 
-  public Fraction(int fullNumber, int numerator, int denominator) {
+  public Fraction(long fullNumber, long numerator, long denominator) {
     this.fullNumber = fullNumber;
     this.numerator = numerator;
     this.denominator = denominator;
   }
 
-  public int getFullNumber() {
+  public long getFullNumber() {
     return fullNumber;
   }
 
-  public void setFullNumber(int fullNumber) {
+  public void setFullNumber(long fullNumber) {
     this.fullNumber = fullNumber;
   }
 
-  public int getNumerator() {
+  public long getNumerator() {
     return numerator;
   }
 
-  public void setNumerator(int numerator) {
+  public void setNumerator(long numerator) {
     this.numerator = numerator;
   }
 
-  public int getDenominator() {
+  public long getDenominator() {
     return denominator;
   }
 
-  public void setDenominator(int denominator) {
+  public void setDenominator(long denominator) {
     this.denominator = denominator;
   }
 

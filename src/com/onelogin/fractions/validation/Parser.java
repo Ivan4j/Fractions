@@ -9,6 +9,9 @@ import java.util.List;
 
 public class Parser {
 
+  private static String NUMBER_SEPARATOR = "_";
+  private static String ANY_DIGIT_REGEX = ".*\\d.*";
+
   public static Equation parse(String[] args) {
     List<Fraction> fractions = new ArrayList<>();
     List<Operator> operators = new ArrayList<>();
@@ -17,17 +20,17 @@ public class Parser {
       // Skip white spaces
       if(param != null && !param.isEmpty() && !param.equals(" ")) {
         // Find any term with digits
-        if(param.matches(".*\\d.*")) {
-          fractions.add(parseTerm(param));
-        } else if(param.equals("+")) {
+        if(param.matches(ANY_DIGIT_REGEX)) {
+          Fraction parsedFraction = parseTerm(param);
+          if(parsedFraction == null) return null;
+          fractions.add(parsedFraction);
+        } else if(param.equals(Operator.ADD.getSymbol())) {
           operators.add(Operator.ADD);
-        } else if(param.equals("+")) {
-          operators.add(Operator.ADD);
-        } else if(param.equals("-")) {
+        } else if(param.equals(Operator.SUB.getSymbol())) {
           operators.add(Operator.SUB);
-        } else if(param.equals("*")) {
+        } else if(param.equals(Operator.MULT.getSymbol())) {
           operators.add(Operator.MULT);
-        } else if(param.equals("/")) {
+        } else if(param.equals(Operator.DIV.getSymbol())) {
           operators.add(Operator.DIV);
         }
       }
@@ -42,7 +45,7 @@ public class Parser {
 
   private static Fraction parseTerm(String param) throws ArrayIndexOutOfBoundsException {
 
-    int fullNumber = 1;
+    Integer fullNumber = null;
     int numerator = 1;
     int denominator = 1;
 
@@ -50,27 +53,22 @@ public class Parser {
 
     // Verify if this term is a Mixed Fraction
     if(param.indexOf("_") > 0) {
-      String[] fractionTerms = param.split("_");
+      String[] fractionTerms = param.split(NUMBER_SEPARATOR);
       fullNumber = Integer.valueOf(fractionTerms[0]);
       fraction = fractionTerms[1];
-    } else {
-      fraction = param;
     }
 
     int fractionSymbolIndex = fraction.indexOf("/");
     if(fractionSymbolIndex > 0) {
       numerator = Integer.valueOf(fraction.substring(0, fractionSymbolIndex));
       denominator = Integer.valueOf(fraction.substring(fractionSymbolIndex + 1, fraction.length()));
+    } else {
+      fullNumber = Integer.valueOf(param);
     }
 
-    System.out.println(param);
-    System.out.println("-----");
-
-    System.out.println(fullNumber);
-    //System.out.println(fraction);
-    System.out.println(numerator);
-    System.out.println(denominator);
-    System.out.println("******");
+    if(fullNumber == null) {
+      return null;
+    }
 
     return new Fraction(fullNumber, numerator, denominator);
   }

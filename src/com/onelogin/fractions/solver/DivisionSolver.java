@@ -9,8 +9,8 @@ public class DivisionSolver extends Solver {
     Fraction simpleFirstTerm = convertMixedToSimpleFraction(firstTerm);
     Fraction simpleSecondTerm = convertMixedToSimpleFraction(secondTerm);
 
-    int numerator = simpleFirstTerm.getNumerator() * simpleSecondTerm.getDenominator();
-    int denominator = simpleFirstTerm.getDenominator() * simpleSecondTerm.getNumerator();
+    long numerator = simpleFirstTerm.getNumerator() * simpleSecondTerm.getDenominator();
+    long denominator = simpleFirstTerm.getDenominator() * simpleSecondTerm.getNumerator();
 
     return convertSimpleToMixedFraction(numerator, denominator);
   }

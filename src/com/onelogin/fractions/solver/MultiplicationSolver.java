@@ -5,8 +5,8 @@ import com.onelogin.fractions.model.Fraction;
 public class MultiplicationSolver extends Solver {
   @Override
   public Fraction solve(Fraction firstTerm, Fraction secondTerm) {
-    int numerator = 1;
-    int denominator = 1;
+    long numerator = 1;
+    long denominator = 1;
 
     Fraction simpleFirstTerm = convertMixedToSimpleFraction(firstTerm);
     Fraction simpleSecondTerm = convertMixedToSimpleFraction(secondTerm);
