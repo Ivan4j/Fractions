@@ -7,7 +7,7 @@ public abstract class Solver {
   public abstract Fraction solve(Fraction firstTerm, Fraction secondTerm);
 
   protected Fraction convertMixedToSimpleFraction(Fraction fraction) {
-    if(fraction.getFullNumber() != 1) {
+    if(fraction.getFullNumber() != null && fraction.getNumerator() != null && fraction.getDenominator() != null) {
       long numerator = fraction.getDenominator() * fraction.getFullNumber() + fraction.getNumerator();
       long denominator = fraction.getDenominator();
       return new Fraction(numerator, denominator);
@@ -15,16 +15,16 @@ public abstract class Solver {
     return fraction;
   }
 
-  protected Fraction convertSimpleToMixedFraction(long numerator, long denominator) {
+  protected Fraction convertSimpleToMixedFraction(Long numerator, Long denominator) {
     // Use ABS to properly make a division between negative numbers (for subtraction calculation)
     long div = Math.abs(numerator) / Math.abs(denominator);
-    if(div >= 2) {
+    if(div >= 1) {
       // Convert back to Mixed Fraction
       long fullNumber = numerator / denominator;
       long newNumerator = Math.abs(numerator - fullNumber * denominator);
       return simplifyFraction(fullNumber, newNumerator, denominator);
     } else {
-      return simplifyFraction(1, numerator, denominator);
+      return simplifyFraction(null, numerator, denominator);
     }
   }
 
@@ -33,7 +33,7 @@ public abstract class Solver {
    * Once the divide number is found, start over until no common number is found
    * @return Simplified fraction
    */
-  protected Fraction simplifyFraction(long fullNumber, long numerator, long denominator) {
+  protected Fraction simplifyFraction(Long fullNumber, Long numerator, Long denominator) {
     long max = Math.min(numerator, denominator);
 
     for(int i=2; i<=max; i++) {
@@ -41,9 +41,16 @@ public abstract class Solver {
         numerator = numerator / i;
         denominator = denominator / i;
         // Start the search again after any common partition is found
+        max = Math.min(numerator, denominator);
         i = 2;
       }
     }
     return new Fraction(fullNumber, numerator, denominator);
+  }
+
+  protected Long getCrossAddition(Fraction firstTerm, Fraction secondTerm) {
+    long firstMult = firstTerm.getNumerator() * secondTerm.getDenominator();
+    long secondMult = firstTerm.getDenominator() * secondTerm.getNumerator();
+    return firstMult + secondMult;
   }
 }

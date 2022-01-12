@@ -6,12 +6,29 @@ public class DivisionSolver extends Solver {
 
   @Override
   public Fraction solve(Fraction firstTerm, Fraction secondTerm) {
-    Fraction simpleFirstTerm = convertMixedToSimpleFraction(firstTerm);
-    Fraction simpleSecondTerm = convertMixedToSimpleFraction(secondTerm);
+    boolean firstTermHasFraction = firstTerm.getNumerator() != null;
+    boolean secondTermHasFraction = secondTerm.getNumerator() != null;
 
-    long numerator = simpleFirstTerm.getNumerator() * simpleSecondTerm.getDenominator();
-    long denominator = simpleFirstTerm.getDenominator() * simpleSecondTerm.getNumerator();
+    long numerator = 1;
+    long denominator = 1;
 
-    return convertSimpleToMixedFraction(numerator, denominator);
+    if(firstTermHasFraction && secondTermHasFraction) {
+      Fraction simpleFirstTerm = convertMixedToSimpleFraction(firstTerm);
+      Fraction simpleSecondTerm = convertMixedToSimpleFraction(secondTerm);
+      numerator = simpleFirstTerm.getNumerator() * simpleSecondTerm.getDenominator();
+      denominator = simpleFirstTerm.getDenominator() * simpleSecondTerm.getNumerator();
+    } else if(firstTermHasFraction) {
+      numerator = firstTerm.getNumerator();
+      denominator = firstTerm.getDenominator() * secondTerm.getFullNumber();
+    } else if(secondTermHasFraction) {
+      numerator = firstTerm.getFullNumber() * secondTerm.getDenominator();
+      denominator = secondTerm.getNumerator();
+    }
+
+    if(firstTerm.getFullNumber() != null || secondTerm.getFullNumber() != null) {
+      return convertSimpleToMixedFraction(numerator, denominator);
+    }
+
+    return simplifyFraction(null, numerator, denominator);
   }
 }

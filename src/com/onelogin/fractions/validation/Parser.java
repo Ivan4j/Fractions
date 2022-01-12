@@ -45,28 +45,30 @@ public class Parser {
 
   private static Fraction parseTerm(String param) throws ArrayIndexOutOfBoundsException {
 
-    Integer fullNumber = null;
-    int numerator = 1;
-    int denominator = 1;
+    Long fullNumber = null;
+    Long numerator = null;
+    Long denominator = null;
 
     String fraction = "";
 
     // Verify if this term is a Mixed Fraction
-    if(param.indexOf("_") > 0) {
+    if(param.indexOf(NUMBER_SEPARATOR) > 0) {
       String[] fractionTerms = param.split(NUMBER_SEPARATOR);
-      fullNumber = Integer.valueOf(fractionTerms[0]);
+      fullNumber = Long.valueOf(fractionTerms[0]);
       fraction = fractionTerms[1];
-    }
-
-    int fractionSymbolIndex = fraction.indexOf("/");
-    if(fractionSymbolIndex > 0) {
-      numerator = Integer.valueOf(fraction.substring(0, fractionSymbolIndex));
-      denominator = Integer.valueOf(fraction.substring(fractionSymbolIndex + 1, fraction.length()));
+    } else if(param.indexOf("/") > 0) {
+      fraction = param;
     } else {
-      fullNumber = Integer.valueOf(param);
+      fullNumber = Long.valueOf(param);
     }
 
-    if(fullNumber == null) {
+    if(!fraction.isEmpty()) {
+      int fractionSymbolIndex = fraction.indexOf("/");
+      numerator = Long.valueOf(fraction.substring(0, fractionSymbolIndex));
+      denominator = Long.valueOf(fraction.substring(fractionSymbolIndex + 1));
+    }
+
+    if(fullNumber == null && fraction.isEmpty()) {
       return null;
     }
 

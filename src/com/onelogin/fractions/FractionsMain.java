@@ -27,18 +27,31 @@ public class FractionsMain {
   }
 
   private static void printSolution(Solution solution) {
+    Fraction solvedEquation = solution.getSolvedEquation();
 
-    if(solution.getSolvedEquation() == null) {
+    if(solvedEquation == null) {
       System.out.println("Invalid Fraction");
       return;
     }
 
-    Fraction solvedEquation = solution.getSolvedEquation();
+    Long fullNumber = solvedEquation.getFullNumber();
+    Long numerator = solvedEquation.getNumerator();
+    Long denominator = solvedEquation.getDenominator();
 
-    if(Math.abs(solvedEquation.getFullNumber()) != 1) {
-      System.out.print(solvedEquation.getFullNumber() + "_");
+    if(fullNumber != null) {
+      System.out.print(fullNumber);
     }
-
-    System.out.print(solvedEquation.getNumerator() + "/" + solvedEquation.getDenominator());
+    if(numerator != null && denominator != null) {
+      if(denominator != 1 && numerator != 0) {
+        if(fullNumber != null) {
+          System.out.print("_");
+        }
+        System.out.print(numerator);
+        System.out.print("/");
+        System.out.print(denominator);
+      } else {
+        System.out.print("Invalid Result");
+      }
+    }
   }
 }

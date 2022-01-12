@@ -40,11 +40,7 @@ public class SolverManager {
         type = Operator.SUB;
       }
 
-      System.out.println("type: " + type);
-
       solvedFraction = executeOperation(equation, type, index);
-
-      System.out.println("solvedFraction: " + solvedFraction);
 
       // Remove both fractions already solved and Add the new solved fraction to the equation
       equation.getOperators().remove(index);
@@ -58,10 +54,7 @@ public class SolverManager {
   private Fraction executeOperation(Equation equation, Operator operator, int operatorIndex) {
 
     Fraction leftFraction = equation.getFractions().get(operatorIndex);
-    Fraction rightFraction = equation.getFractions().get(operatorIndex + 1); // TODO ArrayIndexOutOfBoundEx
-
-    System.out.println("Left: " + leftFraction);
-    System.out.println("Right: " + rightFraction);
+    Fraction rightFraction = equation.getFractions().get(operatorIndex + 1);
 
     Fraction solvedFraction = null;
 
