@@ -24,38 +24,56 @@ public class AdditionSolver extends Solver {
         numerator = add(simpleFirstTerm.getNumerator(), simpleSecondTerm.getNumerator(), isNegativeAddition);
       } else {
         denominator = simpleFirstTerm.getDenominator() * simpleSecondTerm.getDenominator();
-        numerator = getCrossAddition(simpleFirstTerm, simpleSecondTerm);
+        numerator = getCrossAddition(simpleFirstTerm, simpleSecondTerm, isNegativeAddition);
       }
-    } else if(firstTermHasFraction) {
+      if(firstTerm.getFullNumber() != null || secondTerm.getFullNumber() != null) {
+        return convertSimpleToMixedFraction(numerator, denominator);
+      }
+      return simplifyFraction(null, numerator, denominator);
+    }
+
+    if(firstTermHasFraction) {
       numerator = firstTerm.getNumerator();
       denominator = firstTerm.getDenominator();
       long fullNumber = add(firstTerm.getFullNumber(), secondTerm.getFullNumber(), isNegativeAddition);
-      return new Fraction(fullNumber, numerator, denominator);
+      return returnProperFraction(fullNumber, numerator, denominator, secondTermHasFraction, !(firstTerm.getFullNumber() != null && secondTerm.getFullNumber() != null));
     }  else if(secondTermHasFraction) {
       numerator = secondTerm.getNumerator();
       denominator = secondTerm.getDenominator();
       long fullNumber = add(firstTerm.getFullNumber(), secondTerm.getFullNumber(), isNegativeAddition);
-      return new Fraction(fullNumber, numerator, denominator);
+      return returnProperFraction(fullNumber, numerator, denominator, firstTermHasFraction, !(firstTerm.getFullNumber() != null && secondTerm.getFullNumber() != null));
     } else {
       return new Fraction(
           add(firstTerm.getFullNumber(), secondTerm.getFullNumber(), isNegativeAddition),
           null,
           null);
     }
-
-    if(firstTerm.getFullNumber() != null || secondTerm.getFullNumber() != null) {
-      return convertSimpleToMixedFraction(numerator, denominator);
-    }
-
-    //return new Fraction(numerator, denominator);
-    return simplifyFraction(null, numerator, denominator);
   }
 
-  protected Long add(Long firstNumber, Long secondNumber, boolean isNegativeAddition) {
-    if(isNegativeAddition) {
-      return firstNumber - secondNumber;
+  private Long add(Long firstNumber, Long secondNumber, boolean isNegativeAddition) {
+    if(!hasNull(firstNumber, secondNumber)) {
+      if (isNegativeAddition) {
+        return firstNumber - secondNumber;
+      }
+      return firstNumber + secondNumber;
+    } else {
+      return firstNumber == null ? secondNumber : firstNumber;
     }
-    return firstNumber + secondNumber;
+  }
+
+  private Fraction returnProperFraction(Long fullNumber, Long numerator, Long denominator, boolean decisionFlag, boolean shouldSimplify) {
+    if(decisionFlag) {
+      return new Fraction(fullNumber, numerator, denominator);
+    } else {
+      if(shouldSimplify) {
+        return convertMixedToSimpleFraction(new Fraction(fullNumber, numerator, denominator));
+      }
+    }
+    return new Fraction(fullNumber, numerator, denominator);
+  }
+
+  private boolean hasNull(Long firstNumber, Long secondNumnber) {
+    return (firstNumber == null || secondNumnber == null);
   }
 
 }

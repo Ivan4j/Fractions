@@ -8,7 +8,13 @@ public abstract class Solver {
 
   protected Fraction convertMixedToSimpleFraction(Fraction fraction) {
     if(fraction.getFullNumber() != null && fraction.getNumerator() != null && fraction.getDenominator() != null) {
-      long numerator = fraction.getDenominator() * fraction.getFullNumber() + fraction.getNumerator();
+      long multiplication = fraction.getDenominator() * fraction.getFullNumber();
+      long numerator = 0;
+      if(multiplication > 0) {
+        numerator = fraction.getDenominator() * fraction.getFullNumber() + fraction.getNumerator();
+      } else {
+        numerator = fraction.getDenominator() * fraction.getFullNumber() - fraction.getNumerator();
+      }
       long denominator = fraction.getDenominator();
       return new Fraction(numerator, denominator);
     }
@@ -48,9 +54,9 @@ public abstract class Solver {
     return new Fraction(fullNumber, numerator, denominator);
   }
 
-  protected Long getCrossAddition(Fraction firstTerm, Fraction secondTerm) {
+  protected Long getCrossAddition(Fraction firstTerm, Fraction secondTerm, boolean isNegativeAddition) {
     long firstMult = firstTerm.getNumerator() * secondTerm.getDenominator();
     long secondMult = firstTerm.getDenominator() * secondTerm.getNumerator();
-    return firstMult + secondMult;
+    return isNegativeAddition ? firstMult - secondMult : firstMult + secondMult;
   }
 }

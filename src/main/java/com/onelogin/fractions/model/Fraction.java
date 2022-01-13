@@ -13,6 +13,12 @@ public class Fraction {
   private Long numerator;
   private Long denominator;
 
+  public Fraction(Long fullNumber) {
+    this.fullNumber = fullNumber;
+    this.numerator = null;
+    this.denominator = null;
+  }
+
   public Fraction(Long numerator, Long denominator) {
     this.fullNumber = null;
     this.numerator = numerator;
