@@ -49,7 +49,9 @@ public class FractionsMain {
         System.out.print(numerator);
         System.out.print("/");
         System.out.print(denominator);
-      } else {
+      } else if(denominator == 1 && numerator != 0) {
+        System.out.print(numerator);
+      } else if(fullNumber == null){
         System.out.print("Invalid Result");
       }
     }
