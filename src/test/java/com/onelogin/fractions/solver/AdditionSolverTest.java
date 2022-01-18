@@ -55,9 +55,7 @@ class AdditionSolverTest {
     Fraction fractionResult = additionSolver.solve(firstTerm, secondTerm);
 
     assertNotNull(fractionResult);
-    assertEquals(fractionResult.getFullNumber(), 9);
-    assertEquals(fractionResult.getNumerator(), 9);
-    assertEquals(fractionResult.getDenominator(), 3);
+    assertEquals(fractionResult.getFullNumber(), 12L);
   }
 
   @Test
@@ -116,9 +114,7 @@ class AdditionSolverTest {
     Fraction fractionResult = additionSolver.solve(firstTerm, secondTerm);
 
     assertNotNull(fractionResult);
-    assertEquals(fractionResult.getFullNumber(), 13L);
-    assertNull(fractionResult.getNumerator());
-    assertNull(fractionResult.getDenominator());
+    assertEquals(fractionResult.getNumerator(), 13L);
   }
 
   @Test

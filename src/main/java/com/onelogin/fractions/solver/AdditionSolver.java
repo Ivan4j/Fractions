@@ -7,64 +7,44 @@ public class AdditionSolver extends Solver {
   public Fraction solve(Fraction firstTerm, Fraction secondTerm) {
     return solve(firstTerm, secondTerm, false);
   }
-
   protected Fraction solve(Fraction firstTerm, Fraction secondTerm, boolean isNegativeAddition) {
-    boolean firstTermHasFraction = firstTerm.getNumerator() != null;
-    boolean secondTermHasFraction = secondTerm.getNumerator() != null;
+    boolean anyTermHasMixedFraction = isMixedFraction(firstTerm) || isMixedFraction(secondTerm);
 
     Fraction simpleFirstTerm = convertMixedToSimpleFraction(firstTerm);
     Fraction simpleSecondTerm = convertMixedToSimpleFraction(secondTerm);
 
-    boolean hasNegative = firstTerm.getFullNumber() != null && firstTerm.getFullNumber() < 0 ||
-        secondTerm.getFullNumber() != null && secondTerm.getFullNumber() < 0;
+    long numerator = 0;
+    long denominator = 0;
 
-    if(isNegativeAddition || hasNegative) {
-      if (!firstTermHasFraction) {
-        simpleFirstTerm = new Fraction(firstTerm.getFullNumber(), 1L);
-        firstTerm = simpleFirstTerm;
-        firstTermHasFraction = true;
-      }
-
-      if (!secondTermHasFraction) {
-        simpleSecondTerm = new Fraction(secondTerm.getFullNumber(), 1L);
-        secondTerm = simpleSecondTerm;
-        secondTermHasFraction = true;
-      }
-    }
-
-    long numerator = 1;
-    long denominator = 1;
-
-    if(firstTermHasFraction && secondTermHasFraction) {
-      if (simpleFirstTerm.getDenominator() == simpleSecondTerm.getDenominator()) {
-        denominator = simpleFirstTerm.getDenominator();
-        numerator = add(simpleFirstTerm.getNumerator(), simpleSecondTerm.getNumerator(), isNegativeAddition);
+    if (simpleFirstTerm.getDenominator() == simpleSecondTerm.getDenominator()) {
+      denominator = Math.max(simpleFirstTerm.getDenominator(), simpleSecondTerm.getDenominator());
+      numerator = add(simpleFirstTerm.getNumerator(), simpleSecondTerm.getNumerator(), isNegativeAddition);
+    } else if (simpleFirstTerm.getDenominator() == 1) {
+      numerator = simpleFirstTerm.getNumerator() * simpleSecondTerm.getDenominator();
+      denominator = simpleFirstTerm.getDenominator() * simpleSecondTerm.getDenominator();
+      if(isNegativeAddition) {
+        numerator = numerator - simpleSecondTerm.getNumerator();
       } else {
-        denominator = simpleFirstTerm.getDenominator() * simpleSecondTerm.getDenominator();
-        numerator = getCrossAddition(simpleFirstTerm, simpleSecondTerm, isNegativeAddition);
+        numerator = numerator + simpleSecondTerm.getNumerator();
       }
-      if(firstTerm.getFullNumber() != null || secondTerm.getFullNumber() != null) {
-        return convertSimpleToMixedFraction(numerator, denominator);
+    } else if (simpleSecondTerm.getDenominator() == 1) {
+      numerator = simpleSecondTerm.getNumerator() * simpleFirstTerm.getDenominator();
+      denominator = simpleFirstTerm.getDenominator() * simpleSecondTerm.getDenominator();
+      if(isNegativeAddition) {
+        numerator = simpleFirstTerm.getNumerator() - numerator;
+      } else {
+        numerator = simpleFirstTerm.getNumerator() + numerator;
       }
-      return simplifyFraction(null, numerator, denominator);
+    } else {
+      denominator = simpleFirstTerm.getDenominator() * simpleSecondTerm.getDenominator();
+      numerator = getCrossAddition(simpleFirstTerm, simpleSecondTerm, isNegativeAddition);
     }
 
-    if(firstTermHasFraction) {
-      numerator = firstTerm.getNumerator();
-      denominator = firstTerm.getDenominator();
-      long fullNumber = add(firstTerm.getFullNumber(), secondTerm.getFullNumber(), isNegativeAddition);
-      return returnProperFraction(fullNumber, numerator, denominator, secondTermHasFraction, !(firstTerm.getFullNumber() != null && secondTerm.getFullNumber() != null));
-    }  else if(secondTermHasFraction) {
-      numerator = secondTerm.getNumerator();
-      denominator = secondTerm.getDenominator();
-      long fullNumber = add(firstTerm.getFullNumber(), secondTerm.getFullNumber(), isNegativeAddition);
-      return returnProperFraction(fullNumber, numerator, denominator, firstTermHasFraction, !(firstTerm.getFullNumber() != null && secondTerm.getFullNumber() != null));
-    } else {
-      return new Fraction(
-          add(firstTerm.getFullNumber(), secondTerm.getFullNumber(), isNegativeAddition),
-          null,
-          null);
+    if (anyTermHasMixedFraction) {
+      return convertSimpleToMixedFraction(numerator, denominator);
     }
+
+    return simplifyFraction(null, numerator, denominator);
   }
 
   private Long add(Long firstNumber, Long secondNumber, boolean isNegativeAddition) {
@@ -76,17 +56,6 @@ public class AdditionSolver extends Solver {
     } else {
       return firstNumber == null ? secondNumber : firstNumber;
     }
-  }
-
-  private Fraction returnProperFraction(Long fullNumber, Long numerator, Long denominator, boolean decisionFlag, boolean shouldSimplify) {
-    if(decisionFlag) {
-      return new Fraction(fullNumber, numerator, denominator);
-    } else {
-      if(shouldSimplify) {
-        return convertMixedToSimpleFraction(new Fraction(fullNumber, numerator, denominator));
-      }
-    }
-    return new Fraction(fullNumber, numerator, denominator);
   }
 
   private boolean hasNull(Long firstNumber, Long secondNumnber) {

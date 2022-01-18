@@ -49,7 +49,6 @@ public abstract class Solver {
         numerator = numerator / i;
         denominator = denominator / i;
         // Start the search again after any common partition is found
-        //max = Math.min(numerator, denominator);
         i = 2;
         continue;
       }
