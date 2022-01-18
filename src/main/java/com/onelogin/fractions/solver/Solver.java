@@ -17,6 +17,8 @@ public abstract class Solver {
       }
       long denominator = fraction.getDenominator();
       return new Fraction(numerator, denominator);
+    } else if(fraction.getFullNumber() != null && fraction.getNumerator() == null && fraction.getDenominator() == null) {
+      return new Fraction(null, fraction.getFullNumber(), 1L);
     }
     return fraction;
   }
@@ -40,16 +42,18 @@ public abstract class Solver {
    * @return Simplified fraction
    */
   protected Fraction simplifyFraction(Long fullNumber, Long numerator, Long denominator) {
-    long max = Math.min(numerator, denominator);
+    long max = Math.min(Math.abs(numerator), Math.abs(denominator));
 
-    for(int i=2; i<=max; i++) {
+    for(int i=2; i<=max;) {
       if(numerator % i == 0 && denominator % i == 0) {
         numerator = numerator / i;
         denominator = denominator / i;
         // Start the search again after any common partition is found
-        max = Math.min(numerator, denominator);
+        //max = Math.min(numerator, denominator);
         i = 2;
+        continue;
       }
+      i++;
     }
     return new Fraction(fullNumber, numerator, denominator);
   }
@@ -58,5 +62,9 @@ public abstract class Solver {
     long firstMult = firstTerm.getNumerator() * secondTerm.getDenominator();
     long secondMult = firstTerm.getDenominator() * secondTerm.getNumerator();
     return isNegativeAddition ? firstMult - secondMult : firstMult + secondMult;
+  }
+
+  protected boolean isMixedFraction(Fraction fraction) {
+    return fraction.getFullNumber() != null && fraction.getNumerator() != null;
   }
 }

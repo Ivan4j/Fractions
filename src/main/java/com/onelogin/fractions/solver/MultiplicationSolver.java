@@ -6,15 +6,21 @@ public class MultiplicationSolver extends Solver {
   @Override
   public Fraction solve(Fraction firstTerm, Fraction secondTerm) {
 
-    boolean firstTermHasFraction = firstTerm.getNumerator() != null;
-    boolean secondTermHasFraction = secondTerm.getNumerator() != null;
-
-    long numerator = 1;
-    long denominator = 1;
+    boolean anyTermHasMixedFraction = isMixedFraction(firstTerm) || isMixedFraction(secondTerm);
 
     Fraction simpleFirstTerm = convertMixedToSimpleFraction(firstTerm);
     Fraction simpleSecondTerm = convertMixedToSimpleFraction(secondTerm);
 
+    long numerator = simpleFirstTerm.getNumerator() * simpleSecondTerm.getNumerator();
+    long denominator = simpleFirstTerm.getDenominator() * simpleSecondTerm.getDenominator();
+
+    if (anyTermHasMixedFraction) {
+      return convertSimpleToMixedFraction(numerator, denominator);
+    }
+
+    return simplifyFraction(null, numerator, denominator);
+
+/*
     if(firstTermHasFraction && secondTermHasFraction) {
 
       numerator = simpleFirstTerm.getNumerator() * simpleSecondTerm.getNumerator();
@@ -39,5 +45,6 @@ public class MultiplicationSolver extends Solver {
     }
 
     return simplifyFraction(null, numerator, denominator);
+*/
   }
 }

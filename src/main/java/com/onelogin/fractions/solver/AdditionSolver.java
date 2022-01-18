@@ -15,7 +15,10 @@ public class AdditionSolver extends Solver {
     Fraction simpleFirstTerm = convertMixedToSimpleFraction(firstTerm);
     Fraction simpleSecondTerm = convertMixedToSimpleFraction(secondTerm);
 
-    if(isNegativeAddition) {
+    boolean hasNegative = firstTerm.getFullNumber() != null && firstTerm.getFullNumber() < 0 ||
+        secondTerm.getFullNumber() != null && secondTerm.getFullNumber() < 0;
+
+    if(isNegativeAddition || hasNegative) {
       if (!firstTermHasFraction) {
         simpleFirstTerm = new Fraction(firstTerm.getFullNumber(), 1L);
         firstTerm = simpleFirstTerm;

@@ -43,7 +43,7 @@ public class Parser {
     return new Equation(fractions, operators);
   }
 
-  private static Fraction parseTerm(String param) throws ArrayIndexOutOfBoundsException {
+  private static Fraction parseTerm(String param) {
 
     Long fullNumber = null;
     Long numerator = null;
@@ -51,21 +51,27 @@ public class Parser {
 
     String fraction = "";
 
-    // Verify if this term is a Mixed Fraction
-    if(param.indexOf(NUMBER_SEPARATOR) > 0) {
-      String[] fractionTerms = param.split(NUMBER_SEPARATOR);
-      fullNumber = Long.valueOf(fractionTerms[0]);
-      fraction = fractionTerms[1];
-    } else if(param.indexOf("/") > 0) {
-      fraction = param;
-    } else {
-      fullNumber = Long.valueOf(param);
-    }
+    try {
+      // Verify if this term is a Mixed Fraction
+      if (param.indexOf(NUMBER_SEPARATOR) > 0) {
+        String[] fractionTerms = param.split(NUMBER_SEPARATOR);
+        fullNumber = Long.valueOf(fractionTerms[0]);
+        fraction = fractionTerms[1];
+      } else if (param.indexOf("/") > 0) {
+        fraction = param;
+      } else {
+        fullNumber = Long.valueOf(param);
+      }
 
-    if(!fraction.isEmpty()) {
-      int fractionSymbolIndex = fraction.indexOf("/");
-      numerator = Long.valueOf(fraction.substring(0, fractionSymbolIndex));
-      denominator = Long.valueOf(fraction.substring(fractionSymbolIndex + 1));
+      if (!fraction.isEmpty()) {
+        int fractionSymbolIndex = fraction.indexOf("/");
+        numerator = Long.valueOf(fraction.substring(0, fractionSymbolIndex));
+        denominator = Long.valueOf(fraction.substring(fractionSymbolIndex + 1));
+      }
+    } catch (NumberFormatException ex) {
+      return null;
+    } catch (ArrayIndexOutOfBoundsException ex) {
+      return null;
     }
 
     if(fullNumber == null && fraction.isEmpty()) {

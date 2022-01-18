@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AdditionSolverTest {
+class MultiplicationSolverTest {
 
-  private AdditionSolver additionSolver;
+  private MultiplicationSolver multiplicationSolver;
 
   @BeforeEach
   public void init() {
-    additionSolver = new AdditionSolver();
+    multiplicationSolver = new MultiplicationSolver();
   }
 
   @Test
@@ -22,10 +22,10 @@ class AdditionSolverTest {
     Fraction firstTerm = new Fraction(5L, 3L, 4L);
     Fraction secondTerm = new Fraction(2L, 9L, 3L);
 
-    Fraction fractionResult = additionSolver.solve(firstTerm, secondTerm);
+    Fraction fractionResult = multiplicationSolver.solve(firstTerm, secondTerm);
 
     assertNotNull(fractionResult);
-    assertEquals(fractionResult.getFullNumber(), 10);
+    assertEquals(fractionResult.getFullNumber(), 28);
     assertEquals(fractionResult.getNumerator(), 3);
     assertEquals(fractionResult.getDenominator(), 4);
   }
@@ -37,11 +37,11 @@ class AdditionSolverTest {
     Fraction firstTerm = new Fraction(5L, 3L, 4L);
     Fraction secondTerm = new Fraction(15L);
 
-    Fraction fractionResult = additionSolver.solve(firstTerm, secondTerm);
+    Fraction fractionResult = multiplicationSolver.solve(firstTerm, secondTerm);
 
     assertNotNull(fractionResult);
-    assertEquals(fractionResult.getFullNumber(), 20);
-    assertEquals(fractionResult.getNumerator(), 3);
+    assertEquals(fractionResult.getFullNumber(), 86);
+    assertEquals(fractionResult.getNumerator(), 1);
     assertEquals(fractionResult.getDenominator(), 4);
   }
 
@@ -52,12 +52,10 @@ class AdditionSolverTest {
     Fraction firstTerm = new Fraction(7L);
     Fraction secondTerm = new Fraction(2L, 9L, 3L);
 
-    Fraction fractionResult = additionSolver.solve(firstTerm, secondTerm);
+    Fraction fractionResult = multiplicationSolver.solve(firstTerm, secondTerm);
 
     assertNotNull(fractionResult);
-    assertEquals(fractionResult.getFullNumber(), 9);
-    assertEquals(fractionResult.getNumerator(), 9);
-    assertEquals(fractionResult.getDenominator(), 3);
+    assertEquals(fractionResult.getFullNumber(), 35);
   }
 
   @Test
@@ -67,11 +65,11 @@ class AdditionSolverTest {
     Fraction firstTerm = new Fraction(5L, 7L);
     Fraction secondTerm = new Fraction(2L, 3L);
 
-    Fraction fractionResult = additionSolver.solve(firstTerm, secondTerm);
+    Fraction fractionResult = multiplicationSolver.solve(firstTerm, secondTerm);
 
     assertNotNull(fractionResult);
     assertNull(fractionResult.getFullNumber());
-    assertEquals(fractionResult.getNumerator(), 29);
+    assertEquals(fractionResult.getNumerator(), 10);
     assertEquals(fractionResult.getDenominator(), 21);
   }
 
@@ -82,11 +80,11 @@ class AdditionSolverTest {
     Fraction firstTerm = new Fraction(5L);
     Fraction secondTerm = new Fraction(2L, 3L);
 
-    Fraction fractionResult = additionSolver.solve(firstTerm, secondTerm);
+    Fraction fractionResult = multiplicationSolver.solve(firstTerm, secondTerm);
 
     assertNotNull(fractionResult);
     assertNull(fractionResult.getFullNumber());
-    assertEquals(fractionResult.getNumerator(), 17);
+    assertEquals(fractionResult.getNumerator(), 10);
     assertEquals(fractionResult.getDenominator(), 3);
   }
 
@@ -97,11 +95,11 @@ class AdditionSolverTest {
     Fraction firstTerm = new Fraction(5L, 7L);
     Fraction secondTerm = new Fraction(8L);
 
-    Fraction fractionResult = additionSolver.solve(firstTerm, secondTerm);
+    Fraction fractionResult = multiplicationSolver.solve(firstTerm, secondTerm);
 
     assertNotNull(fractionResult);
     assertNull(fractionResult.getFullNumber());
-    assertEquals(fractionResult.getNumerator(), 61);
+    assertEquals(fractionResult.getNumerator(), 40);
     assertEquals(fractionResult.getDenominator(), 7);
   }
 
@@ -113,12 +111,10 @@ class AdditionSolverTest {
     Fraction firstTerm = new Fraction(5L);
     Fraction secondTerm = new Fraction(8L);
 
-    Fraction fractionResult = additionSolver.solve(firstTerm, secondTerm);
+    Fraction fractionResult = multiplicationSolver.solve(firstTerm, secondTerm);
 
     assertNotNull(fractionResult);
-    assertEquals(fractionResult.getFullNumber(), 13L);
-    assertNull(fractionResult.getNumerator());
-    assertNull(fractionResult.getDenominator());
+    assertEquals(fractionResult.getNumerator(), 40);
   }
 
   @Test
@@ -128,12 +124,12 @@ class AdditionSolverTest {
     Fraction firstTerm = new Fraction(-1L, 3L);
     Fraction secondTerm = new Fraction(3L, 4L);
 
-    Fraction fractionResult = additionSolver.solve(firstTerm, secondTerm);
+    Fraction fractionResult = multiplicationSolver.solve(firstTerm, secondTerm);
 
     assertNotNull(fractionResult);
     assertNull(fractionResult.getFullNumber());
-    assertEquals(fractionResult.getNumerator(), 5L);
-    assertEquals(fractionResult.getDenominator(), 12L);
+    assertEquals(fractionResult.getNumerator(), -1);
+    assertEquals(fractionResult.getDenominator(), 4);
   }
 
   @Test
@@ -143,12 +139,12 @@ class AdditionSolverTest {
     Fraction firstTerm = new Fraction(1L, 3L);
     Fraction secondTerm = new Fraction(-3L, 4L);
 
-    Fraction fractionResult = additionSolver.solve(firstTerm, secondTerm);
+    Fraction fractionResult = multiplicationSolver.solve(firstTerm, secondTerm);
 
     assertNotNull(fractionResult);
     assertNull(fractionResult.getFullNumber());
-    assertEquals(fractionResult.getNumerator(), -5L);
-    assertEquals(fractionResult.getDenominator(), 12L);
+    assertEquals(fractionResult.getNumerator(), -1L);
+    assertEquals(fractionResult.getDenominator(), 4L);
   }
 
   @Test
@@ -158,12 +154,12 @@ class AdditionSolverTest {
     Fraction firstTerm = new Fraction(-3L, 5L, 8L);
     Fraction secondTerm = new Fraction(4L, 7L);
 
-    Fraction fractionResult = additionSolver.solve(firstTerm, secondTerm);
+    Fraction fractionResult = multiplicationSolver.solve(firstTerm, secondTerm);
 
     assertNotNull(fractionResult);
-    assertEquals(fractionResult.getFullNumber(), -3L);
-    assertEquals(fractionResult.getNumerator(), 3L);
-    assertEquals(fractionResult.getDenominator(), 56L);
+    assertEquals(fractionResult.getFullNumber(), -2L);
+    assertEquals(fractionResult.getNumerator(), 1L);
+    assertEquals(fractionResult.getDenominator(), 14L);
   }
 
   @Test
@@ -173,10 +169,10 @@ class AdditionSolverTest {
     Fraction firstTerm = new Fraction(-3L, 5L, 8L);
     Fraction secondTerm = new Fraction(7L);
 
-    Fraction fractionResult = additionSolver.solve(firstTerm, secondTerm);
+    Fraction fractionResult = multiplicationSolver.solve(firstTerm, secondTerm);
 
     assertNotNull(fractionResult);
-    assertEquals(fractionResult.getFullNumber(), 3L);
+    assertEquals(fractionResult.getFullNumber(), -25L);
     assertEquals(fractionResult.getNumerator(), 3L);
     assertEquals(fractionResult.getDenominator(), 8L);
   }
@@ -188,11 +184,11 @@ class AdditionSolverTest {
     Fraction firstTerm = new Fraction(5L, 8L);
     Fraction secondTerm = new Fraction(-3L, 4L, 7L);
 
-    Fraction fractionResult = additionSolver.solve(firstTerm, secondTerm);
+    Fraction fractionResult = multiplicationSolver.solve(firstTerm, secondTerm);
 
     assertNotNull(fractionResult);
     assertEquals(fractionResult.getFullNumber(), -2L);
-    assertEquals(fractionResult.getNumerator(), 53L);
+    assertEquals(fractionResult.getNumerator(), 13L);
     assertEquals(fractionResult.getDenominator(), 56L);
   }
 
@@ -203,11 +199,11 @@ class AdditionSolverTest {
     Fraction firstTerm = new Fraction(5L);
     Fraction secondTerm = new Fraction(-3L, 4L, 7L);
 
-    Fraction fractionResult = additionSolver.solve(firstTerm, secondTerm);
+    Fraction fractionResult = multiplicationSolver.solve(firstTerm, secondTerm);
 
     assertNotNull(fractionResult);
-    assertEquals(fractionResult.getFullNumber(), 1L);
-    assertEquals(fractionResult.getNumerator(), 3L);
+    assertEquals(fractionResult.getFullNumber(), -17L);
+    assertEquals(fractionResult.getNumerator(), 6L);
     assertEquals(fractionResult.getDenominator(), 7L);
   }
 
@@ -218,22 +214,9 @@ class AdditionSolverTest {
     Fraction firstTerm = new Fraction(5L, 5L, 5L);
     Fraction secondTerm = new Fraction(3L, 3L, 3L);
 
-    Fraction fractionResult = additionSolver.solve(firstTerm, secondTerm);
+    Fraction fractionResult = multiplicationSolver.solve(firstTerm, secondTerm);
 
     assertNotNull(fractionResult);
-    assertEquals(fractionResult.getFullNumber(), 10L);
-  }
-
-  @Test
-  public void Should_return_proper_result_when_using_fraction_with_same_numbers_inverted() {
-
-    // input: 3_3/3, 5_5/5
-    Fraction firstTerm = new Fraction(3L, 3L, 3L);
-    Fraction secondTerm = new Fraction(5L, 5L, 5L);
-
-    Fraction fractionResult = additionSolver.solve(firstTerm, secondTerm);
-
-    assertNotNull(fractionResult);
-    assertEquals(fractionResult.getFullNumber(), 10L);
+    assertEquals(fractionResult.getFullNumber(), 24L);
   }
 }
