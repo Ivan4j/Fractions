@@ -26,18 +26,30 @@ public class SolverManager {
       Fraction solvedFraction = null;
       Operator type = Operator.ADD;
       int index = -1;
-      if (equation.getOperators().contains(Operator.MULT)) {
-        index = equation.getOperators().indexOf(Operator.MULT);
-        type = Operator.MULT;
-      } else if (equation.getOperators().contains(Operator.DIV)) {
-        index = equation.getOperators().indexOf(Operator.DIV);
-        type = Operator.DIV;
-      } else if (equation.getOperators().contains(Operator.ADD)) {
-        index = equation.getOperators().indexOf(Operator.ADD);
-        type = Operator.ADD;
-      } else if (equation.getOperators().contains(Operator.SUB)) {
-        index = equation.getOperators().indexOf(Operator.SUB);
-        type = Operator.SUB;
+
+      // Find Order to be executed
+      // Same level operators should be executed from Left to Right as found in the EQ
+      if (equation.getOperators().contains(Operator.MULT) || equation.getOperators().contains(Operator.DIV)) {
+        int multIndex = equation.getOperators().indexOf(Operator.MULT);
+        int divIndex = equation.getOperators().indexOf(Operator.DIV);
+        if((multIndex != -1 && multIndex < divIndex) || (divIndex == -1  && multIndex != -1)) {
+          index = multIndex;
+          type = Operator.MULT;
+        } else if((divIndex != -1 && divIndex < multIndex) || (multIndex ==  -1 && divIndex != -1)) {
+          index = divIndex;
+          type = Operator.DIV;
+        }
+      } else if (equation.getOperators().contains(Operator.ADD) || equation.getOperators().contains(Operator.SUB)) {
+
+        int addIndex = equation.getOperators().indexOf(Operator.ADD);;
+        int subIndex = equation.getOperators().indexOf(Operator.SUB);;
+        if((addIndex != -1 && addIndex < subIndex) || (subIndex == -1 && addIndex != -1)) {
+          index = addIndex;
+          type = Operator.ADD;
+        } else if((subIndex != -1 && subIndex < addIndex) || (addIndex == -1 && subIndex != -1)) {
+          index = subIndex;
+          type = Operator.SUB;
+        }
       }
 
       solvedFraction = executeOperation(equation, type, index);

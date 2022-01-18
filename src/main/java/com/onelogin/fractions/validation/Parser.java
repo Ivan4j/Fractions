@@ -19,6 +19,7 @@ public class Parser {
     for(String param : args) {
       // Skip white spaces
       if(param != null && !param.isEmpty() && !param.equals(" ")) {
+        param = param.trim();
         // Find any term with digits
         if(param.matches(ANY_DIGIT_REGEX)) {
           Fraction parsedFraction = parseTerm(param);
@@ -36,7 +37,7 @@ public class Parser {
       }
     }
 
-    if(operators.isEmpty() || fractions.isEmpty()) {
+    if(fractions.size() <= operators.size() || (operators.size() == 0 && fractions.size() > 1)) {
       return null;
     }
 
@@ -69,6 +70,8 @@ public class Parser {
         denominator = Long.valueOf(fraction.substring(fractionSymbolIndex + 1));
       }
     } catch (NumberFormatException ex) {
+      return null;
+    } catch (StringIndexOutOfBoundsException ex) {
       return null;
     } catch (ArrayIndexOutOfBoundsException ex) {
       return null;

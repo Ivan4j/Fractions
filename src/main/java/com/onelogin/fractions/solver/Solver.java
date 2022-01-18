@@ -24,7 +24,7 @@ public abstract class Solver {
   }
 
   protected Fraction convertSimpleToMixedFraction(Long numerator, Long denominator) {
-    // Use ABS to properly make a division between negative numbers (for subtraction calculation)
+    // Use Math.abs() to properly make a division between negative numbers (for subtraction calculation)
     long div = Math.abs(numerator) / Math.abs(denominator);
     if(div >= 1) {
       // Convert back to Mixed Fraction
