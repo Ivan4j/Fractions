@@ -14,6 +14,8 @@ This Fraction Calculator can solve Equations having one, two or many terms.
 
 In order to compile and generate the .jar file, please run the following command:
 
+(Java 8 or higher is required)
+
 ```shell
 user@host:~ ./gradlew clean build 
 ```
