@@ -116,7 +116,7 @@ class ParserTest {
     String[] input6 = {"  ? ", "5_2/3",  "^", "7/9"};
 
     // Using % instead of valid operator
-    String[] input7 = {"  ? ", "5_2/3",  "%s", "7/9"};
+    String[] input7 = {"  ? ", "5_2/3",  "%", "7/9"};
 
     Equation parsedEquation1 = Parser.parse(input1);
     Equation parsedEquation2 = Parser.parse(input2);

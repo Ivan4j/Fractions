@@ -14,6 +14,7 @@ public class MultiplicationSolver extends Solver {
     long numerator = simpleFirstTerm.getNumerator() * simpleSecondTerm.getNumerator();
     long denominator = simpleFirstTerm.getDenominator() * simpleSecondTerm.getDenominator();
 
+    // Convert to a Mixed fraction if any of the original terms is mixed as well
     if (anyTermHasMixedFraction) {
       return convertSimpleToMixedFraction(numerator, denominator);
     }

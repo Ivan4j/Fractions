@@ -1,12 +1,38 @@
 plugins {
     id 'java'
+    id 'application'
+}
+
+compileJava {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 group 'org.onelogin'
 version '1.0-SNAPSHOT'
 
+apply plugin : 'java'
+ext {
+    javaMainClass = 'com.onelogin.fractions.FractionsMain'
+}
+
+application {
+    mainClass = javaMainClass
+}
+
+mainClassName = 'com.onelogin.fractions.FractionsMain'
+
 repositories {
     mavenCentral()
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': mainClassName
+        )
+    }
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
 dependencies {

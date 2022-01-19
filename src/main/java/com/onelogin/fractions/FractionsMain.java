@@ -9,8 +9,7 @@ import com.onelogin.fractions.validation.Parser;
 public class FractionsMain {
   public static void main(String[] args) {
 
-    // TODO: Steps
-    if(args.length <= 2) {
+    if(args.length == 0) {
       System.out.println("Invalid Equation");
       return;
     }
@@ -27,6 +26,7 @@ public class FractionsMain {
   }
 
   private static void printSolution(Solution solution) {
+    // This method can be moved to a PrintUtils class
     Fraction solvedEquation = solution.getSolvedEquation();
 
     if(solvedEquation == null) {
@@ -38,6 +38,7 @@ public class FractionsMain {
     Long numerator = solvedEquation.getNumerator();
     Long denominator = solvedEquation.getDenominator();
 
+    // This logic can be optimized to generate the Output by using a StringBuilder
     if(fullNumber != null) {
       System.out.print(fullNumber);
     }

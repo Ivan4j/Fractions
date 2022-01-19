@@ -13,10 +13,10 @@ import com.onelogin.fractions.model.Solution;
 public class SolverManager {
 
   public Solution solve(Equation equation) {
-    return new Solution(getNextOperation(equation));
+    return new Solution(manageCalculationOrder(equation));
   }
 
-  private Fraction getNextOperation(Equation equation) {
+  private Fraction manageCalculationOrder(Equation equation) {
 
     if(equation == null) {
       return null;
@@ -27,8 +27,8 @@ public class SolverManager {
       Operator type = Operator.ADD;
       int index = -1;
 
-      // Find Order to be executed
-      // Same level operators should be executed from Left to Right as found in the EQ
+      // Find the order to execute the operations
+      // Same level operators should be executed from Left to Right as found in the Equation
       if (equation.getOperators().contains(Operator.MULT) || equation.getOperators().contains(Operator.DIV)) {
         int multIndex = equation.getOperators().indexOf(Operator.MULT);
         int divIndex = equation.getOperators().indexOf(Operator.DIV);
@@ -52,17 +52,33 @@ public class SolverManager {
         }
       }
 
+      // Solve the current Operation
       solvedFraction = executeOperation(equation, type, index);
 
-      // Remove both fractions already solved and Add the new solved fraction to the equation
+      // Updated the Equation by removing two fractions that were already solved in the previous step
+      // Add the new solved fraction to the equation
       equation.getOperators().remove(index);
       equation.getFractions().remove(index);
       equation.getFractions().remove(index);
       equation.getFractions().add(index, solvedFraction);
     }
+
+    // Something wrong, there should be 1 item left
+    if(equation.getFractions().size() == 0 || equation.getFractions().size() > 1) {
+      return null;
+    }
+
+    // Return the last fraction, it represents the final calculation
     return equation.getFractions().get(0);
   }
 
+  /**
+   * Responsible for executing the corresponding operation logic
+   * @param equation represents the full equation cocntaining all the fraction terms and operators
+   * @param operator represents the type of operation to execute (Addition, Subtraction, Multiplication or Division)
+   * @param operatorIndex represents the index of the operator
+   * @return a `solved fraction` after executing the calculation logic
+   */
   private Fraction executeOperation(Equation equation, Operator operator, int operatorIndex) {
 
     Fraction leftFraction = equation.getFractions().get(operatorIndex);

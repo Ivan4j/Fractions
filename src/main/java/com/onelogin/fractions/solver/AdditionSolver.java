@@ -7,6 +7,7 @@ public class AdditionSolver extends Solver {
   public Fraction solve(Fraction firstTerm, Fraction secondTerm) {
     return solve(firstTerm, secondTerm, false);
   }
+
   protected Fraction solve(Fraction firstTerm, Fraction secondTerm, boolean isNegativeAddition) {
     boolean anyTermHasMixedFraction = isMixedFraction(firstTerm) || isMixedFraction(secondTerm);
 
@@ -22,24 +23,17 @@ public class AdditionSolver extends Solver {
     } else if (simpleFirstTerm.getDenominator() == 1) {
       numerator = simpleFirstTerm.getNumerator() * simpleSecondTerm.getDenominator();
       denominator = simpleFirstTerm.getDenominator() * simpleSecondTerm.getDenominator();
-      if(isNegativeAddition) {
-        numerator = numerator - simpleSecondTerm.getNumerator();
-      } else {
-        numerator = numerator + simpleSecondTerm.getNumerator();
-      }
+      numerator = add(numerator, simpleSecondTerm.getNumerator(), isNegativeAddition);
     } else if (simpleSecondTerm.getDenominator() == 1) {
       numerator = simpleSecondTerm.getNumerator() * simpleFirstTerm.getDenominator();
       denominator = simpleFirstTerm.getDenominator() * simpleSecondTerm.getDenominator();
-      if(isNegativeAddition) {
-        numerator = simpleFirstTerm.getNumerator() - numerator;
-      } else {
-        numerator = simpleFirstTerm.getNumerator() + numerator;
-      }
+      numerator = add(simpleFirstTerm.getNumerator(), numerator, isNegativeAddition);
     } else {
       denominator = simpleFirstTerm.getDenominator() * simpleSecondTerm.getDenominator();
       numerator = getCrossAddition(simpleFirstTerm, simpleSecondTerm, isNegativeAddition);
     }
 
+    // Convert to a Mixed fraction if any of the original terms is mixed as well
     if (anyTermHasMixedFraction) {
       return convertSimpleToMixedFraction(numerator, denominator);
     }
@@ -47,6 +41,13 @@ public class AdditionSolver extends Solver {
     return simplifyFraction(null, numerator, denominator);
   }
 
+  /**
+   * Perform positive or negative addition between two numbers
+   * @param firstNumber
+   * @param secondNumber
+   * @param isNegativeAddition this indicates if the numbers will be added or subtracted
+   * @return
+   */
   private Long add(Long firstNumber, Long secondNumber, boolean isNegativeAddition) {
     if(!hasNull(firstNumber, secondNumber)) {
       if (isNegativeAddition) {

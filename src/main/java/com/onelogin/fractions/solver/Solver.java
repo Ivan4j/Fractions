@@ -6,6 +6,14 @@ public abstract class Solver {
 
   public abstract Fraction solve(Fraction firstTerm, Fraction secondTerm);
 
+  /**
+   * Transforms a Mixed fraction into a Simple one:
+   * Multiply the full number by the denominator and add it to the numerator.
+   * This will becomes the new numerator of the simple fraction.
+   * The denominator will be the same from the original denominator.
+   * @param fraction Mixed fraction
+   * @return Simple fraction with Numerator and Denominator only.
+   */
   protected Fraction convertMixedToSimpleFraction(Fraction fraction) {
     if(fraction.getFullNumber() != null && fraction.getNumerator() != null && fraction.getDenominator() != null) {
       long multiplication = fraction.getDenominator() * fraction.getFullNumber();
@@ -23,6 +31,16 @@ public abstract class Solver {
     return fraction;
   }
 
+  /**
+   * Transform a simple fraction into a Mixed fraction:
+   * Divide the numerator by the denominator.
+   * The resultant becomes the full number.
+   * The remainder becomes the numerator of the new fraction.
+   * The denominator will be the same from the original fraction.
+   * @param numerator Numerator from the simple fraction
+   * @param denominator Denominator from the Simple fraction
+   * @return Mixed fraction
+   */
   protected Fraction convertSimpleToMixedFraction(Long numerator, Long denominator) {
     // Use Math.abs() to properly make a division between negative numbers (for subtraction calculation)
     long div = Math.abs(numerator) / Math.abs(denominator);
